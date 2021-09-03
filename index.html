@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="text" />
+    <button onclick="send()">发送</button>
+    <script>
+        let text = document.getElementById('text');
+        // 在浏览器里连接服务器的8888端口
+        let socket = new WebSocket("ws://localhost:8888")
+        // 当连接打开或者建立后会触发回调
+        socket.onopen = function() {
+            socket.send('server')
+        }
+        // 当服务器给客户端发送消息后，客户端可以通过onmessage进行接受
+        socket.onmessage = function(event) {
+            console.log(event.data)
+        }
+        function send() {
+            let value = text.value;
+            text.value = ''
+        }
+    </script>
+</body>
+</html>
